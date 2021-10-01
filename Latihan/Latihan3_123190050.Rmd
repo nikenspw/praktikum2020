@@ -1,0 +1,77 @@
+---
+title: "Latihan3_123190050"
+author: "Niken"
+date: "10/1/2021"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. nilai populasi terkecil
+
+```{r}
+library(dslabs)
+data(murders)
+pop = murders$population
+i = sort(pop)
+i[1]
+
+```
+
+2. indeks data dengan populasi terkecil
+
+```{r}
+index = order(pop)
+index
+```
+
+3. penggunaan which min
+
+```{r}
+which.min(pop)
+```
+
+4. Negara dengan populasi terkecil
+
+```{r}
+region = which.min(pop)
+murders$state[region]
+```
+
+5. data frame baru
+```{r}
+ranks = rank(pop)
+city = murders$state
+my_df = data.frame(name = city, rank = ranks)
+my_df
+```
+6. urutan my_df
+```{r}
+value = my_df$rank
+ind = order(value)
+ind
+```
+
+7. visualisasi plot dalam skala log
+```{r}
+population_in_millions = murders$population/10^6
+a = log10(population_in_millions)
+total_gun_murders = murders$total
+plot(a, total_gun_murders) 
+```
+
+8.histogram populasi
+```{r}
+state_population = with(murders, total_gun_murders/population_in_millions) 
+hist(state_population)
+```
+
+9. boxplot populasi negara bagian berdasar wilayah
+```{r}
+boxplot(state_population~region, data = murders)
+```
