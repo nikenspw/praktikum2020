@@ -1,0 +1,65 @@
+---
+title: "Latihan4_123190050"
+author: "Niken"
+date: "11/8/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dslabs)
+library(tidyverse)
+library(dplyr)
+library(purrr)
+data(murders)
+
+```
+
+1. Murders tibble
+```{r}
+
+murders_tibble <- as_tibble(murders)
+murders_tibble
+
+```
+2.Tibble yang dikelompokkan berdasarkan region
+```{r}
+murders_tibble %>% group_by(region)
+```
+3. Script tidyverse dari exp(mean(log(murders$population)))
+```{r}
+murders %>% .$population %>% log %>% mean %>% exp
+```
+
+4.data frame tiga kolom
+```{r}
+compute_s_n <- function(n){ 
+ hasil <- sum(1:n)
+ 
+ tibble(
+   n = n,
+   s_n = hasil,
+   s_n_2 = "" 
+   )
+}
+
+
+```
+
+```{r}
+n <-1:100
+result <- map_df(n, compute_s_n)
+result$s_n_2[1] = "1"
+for (i in 2:100) {
+    result$s_n_2[i] = paste(result$s_n_2[i-1], i, sep = "+")
+}
+
+for (i in 2:100) {
+   result$s_n_2[i] = paste(result$s_n[i], result$s_n_2[i], sep = " -> ")
+}
+result
+```
+
